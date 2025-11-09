@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'pages/beranda_page.dart';
 import 'pages/chatbotpage.dart';
 
@@ -19,3 +20,13 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+=======
+import 'upload_page.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: UploadPage(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
+>>>>>>> origin/feature/upload
