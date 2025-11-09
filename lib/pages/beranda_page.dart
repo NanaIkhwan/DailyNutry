@@ -3,6 +3,7 @@ import 'chatbotpage.dart';
 import 'riwayat_page.dart';
 import 'edukasi_page.dart';
 import 'profil_page.dart';
+import 'package:dailynutryapp/upload_page.dart';
 
 class BerandaPage extends StatefulWidget {
   const BerandaPage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _BerandaPageState extends State<BerandaPage> {
   final List<Widget> _pages = [
     const BerandaUtama(), // halaman beranda utama
     const RiwayatPage(),
-    Placeholder(color: Colors.blue), // nanti bisa diganti UploadPage
+    const UploadPage(), // nanti bisa diganti UploadPage
     const EdukasiPage(),
     const ProfilPage(),
   ];
@@ -41,13 +42,20 @@ class _BerandaPageState extends State<BerandaPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
-      // Tombol navigasi bawah
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _index,
         onTap: (i) {
-          setState(() {
-            _index = i;
-          });
+          if (i == 2) {
+            //  buka halaman Upload terpisah
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UploadPage()),
+            );
+          } else {
+            setState(() {
+              _index = i;
+            });
+          }
         },
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,

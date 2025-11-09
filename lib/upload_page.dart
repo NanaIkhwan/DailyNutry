@@ -28,24 +28,23 @@ class _UploadPageState extends State<UploadPage> {
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error picking image: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error picking image: $e')));
     }
   }
 
   void _submitPhoto() {
     if (_selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a photo first')),
+        const SnackBar(content: Text('Silakan pilih gambar dahulu')),
       );
       return;
     }
 
-    // Implement your upload logic here
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Photo submitted successfully!')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Foto berhasil diunggah!')));
   }
 
   @override
@@ -58,9 +57,9 @@ class _UploadPageState extends State<UploadPage> {
             // Header section
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: const Color(0xFF2ECC71),
-                borderRadius: const BorderRadius.only(
+              decoration: const BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -86,7 +85,7 @@ class _UploadPageState extends State<UploadPage> {
                   ),
                   const SizedBox(height: 4),
                   const Text(
-                    'Upload a photo of yourself\nholding your valid',
+                    'Unggah foto bungkus makanan Anda',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -104,8 +103,6 @@ class _UploadPageState extends State<UploadPage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    
-                    // Upload box
                     GestureDetector(
                       onTap: _pickImage,
                       child: Container(
@@ -134,7 +131,7 @@ class _UploadPageState extends State<UploadPage> {
                                   ),
                                   const SizedBox(height: 16),
                                   const Text(
-                                    'Tap to upload photo',
+                                    'Tap untuk unggah foto',
                                     style: TextStyle(
                                       color: Colors.blue,
                                       fontSize: 16,
@@ -143,9 +140,9 @@ class _UploadPageState extends State<UploadPage> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'PNG or JPG (max 5mb)',
+                                    'PNG atau JPG (maks 5MB)',
                                     style: TextStyle(
-                                      color: Colors.grey[600],
+                                      color: Colors.grey,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -166,7 +163,10 @@ class _UploadPageState extends State<UploadPage> {
                                       child: CircleAvatar(
                                         backgroundColor: Colors.black54,
                                         child: IconButton(
-                                          icon: const Icon(Icons.close, color: Colors.white),
+                                          icon: const Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
                                           onPressed: () {
                                             setState(() {
                                               _selectedImage = null;
@@ -180,9 +180,9 @@ class _UploadPageState extends State<UploadPage> {
                               ),
                       ),
                     ),
-                    
+
                     const Spacer(),
-                    
+
                     // Submit button
                     SizedBox(
                       width: double.infinity,
@@ -190,7 +190,7 @@ class _UploadPageState extends State<UploadPage> {
                       child: ElevatedButton(
                         onPressed: _submitPhoto,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2ECC71),
+                          backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -198,7 +198,7 @@ class _UploadPageState extends State<UploadPage> {
                           elevation: 0,
                         ),
                         child: const Text(
-                          'Submit',
+                          'Kirim',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -211,51 +211,9 @@ class _UploadPageState extends State<UploadPage> {
                 ),
               ),
             ),
-
-            // Bottom navigation
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF2ECC71),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildNavItem(Icons.home, 'Beranda', false),
-                  _buildNavItem(Icons.notifications_outlined, 'Notifikasi', false),
-                  _buildNavItem(Icons.person_outline, 'Profil', true),
-                ],
-              ),
-            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          color: Colors.white,
-          size: 28,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-      ],
     );
   }
 }
