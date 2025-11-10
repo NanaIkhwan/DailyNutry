@@ -4,8 +4,11 @@ import 'riwayat_page.dart';
 import 'edukasi_page.dart';
 import 'profil_page.dart';
 import 'package:dailynutryapp/upload_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class BerandaPage extends StatefulWidget {
+  // final User? user;
   const BerandaPage({Key? key}) : super(key: key);
 
   @override
@@ -14,12 +17,11 @@ class BerandaPage extends StatefulWidget {
 
 class _BerandaPageState extends State<BerandaPage> {
   int _index = 0;
-
   // Daftar halaman yang bisa diakses
   final List<Widget> _pages = [
-    const BerandaUtama(), // halaman beranda utama
+    const BerandaUtama(),
     const RiwayatPage(),
-    const UploadPage(), // nanti bisa diganti UploadPage
+    const UploadPage(),
     const EdukasiPage(),
     const ProfilPage(),
   ];
@@ -31,7 +33,7 @@ class _BerandaPageState extends State<BerandaPage> {
 
       // Tombol ChatBot di pojok kanan bawah
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
         onPressed: () {
           Navigator.push(
             context,
@@ -57,7 +59,7 @@ class _BerandaPageState extends State<BerandaPage> {
             });
           }
         },
-        selectedItemColor: Colors.green,
+        selectedItemColor: const Color.fromARGB(255, 167, 252, 219),
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: const [
@@ -72,9 +74,15 @@ class _BerandaPageState extends State<BerandaPage> {
   }
 }
 
-class BerandaUtama extends StatelessWidget {
+class BerandaUtama extends StatefulWidget {
+  // final User? user;
   const BerandaUtama({Key? key}) : super(key: key);
 
+  @override
+  State<BerandaUtama> createState() => _BerandaUtamaState();
+}
+
+class _BerandaUtamaState extends State<BerandaUtama> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -85,7 +93,10 @@ class BerandaUtama extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF66BB6A), Color(0xFF4CAF50)],
+              colors: [
+                const Color.fromARGB(255, 167, 252, 219),
+                const Color.fromARGB(255, 167, 252, 219),
+              ],
             ),
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
@@ -104,7 +115,7 @@ class BerandaUtama extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Hai ",
+                          '👋',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,

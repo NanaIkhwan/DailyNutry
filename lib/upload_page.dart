@@ -58,7 +58,7 @@ class _UploadPageState extends State<UploadPage> {
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.green,
+                color: const Color.fromARGB(255, 167, 252, 219),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
@@ -190,7 +190,12 @@ class _UploadPageState extends State<UploadPage> {
                       child: ElevatedButton(
                         onPressed: _submitPhoto,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            167,
+                            252,
+                            219,
+                          ),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),

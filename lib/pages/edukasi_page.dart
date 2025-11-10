@@ -29,7 +29,7 @@ class EdukasiPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edukasi', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF4CAF50),
+        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -62,7 +62,7 @@ class EdukasiPage extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.book,
-                      color: Colors.green,
+                      color: const Color.fromARGB(255, 167, 252, 219),
                       size: 24,
                     ),
                   ),
@@ -85,7 +85,7 @@ class EdukasiPage extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: const Color.fromARGB(255, 167, 252, 219),
                             ),
                           ),
                         ),

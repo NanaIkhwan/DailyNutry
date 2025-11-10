@@ -1,5 +1,7 @@
+import 'package:dailynutryapp/pages/beranda_page.dart';
+import 'package:dailynutryapp/pages/dashboard_page.dart';
 import 'package:dailynutryapp/views/auth/login_page.dart';
-import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
+// import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class _WrapperState extends State<Wrapper> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return BerandaPage();
           } else {
             return Login();
           }

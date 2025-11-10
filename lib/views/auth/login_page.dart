@@ -23,7 +23,8 @@ class _LoginState extends State<Login> {
         password: password.text.trim(),
       );
       // pindah ke home jika berhasil
-      Navigator.pushReplacementNamed(context, '/home');
+      print('login berhasil');
+      Navigator.pushReplacementNamed(context, '/beranda');
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,
@@ -57,16 +58,21 @@ class _LoginState extends State<Login> {
                 obscureText: true,
               ),
               const SizedBox(height: 40),
-              ElevatedButton(onPressed: signIn, style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 117, 236, 179),
-                foregroundColor: Colors.black,
-                side: BorderSide(color: Colors.black),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)
-                ), minimumSize: Size(270, 45)
-              ), child: const Text("Masuk")),
+              ElevatedButton(
+                onPressed: signIn,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 117, 236, 179),
+                  foregroundColor: Colors.black,
+                  side: BorderSide(color: Colors.black),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  minimumSize: Size(270, 45),
+                ),
+                child: const Text("Masuk"),
+              ),
 
-              SizedBox(height: 50,),
+              SizedBox(height: 50),
 
               Text('Belum punya akun ?'),
 
@@ -78,8 +84,9 @@ class _LoginState extends State<Login> {
                   foregroundColor: Colors.black,
                   side: BorderSide(color: Colors.greenAccent, width: 2),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4)
-                  ),minimumSize: Size(270, 45)
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  minimumSize: Size(270, 45),
                 ),
                 child: const Text('Daftar Sekarang'),
               ),

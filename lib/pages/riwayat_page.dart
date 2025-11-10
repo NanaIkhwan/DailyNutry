@@ -21,7 +21,7 @@ class RiwayatPage extends StatelessWidget {
           'Riwayat Pemeriksaan',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF4CAF50),
+        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {

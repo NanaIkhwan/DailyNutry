@@ -19,13 +19,12 @@ dependencies:
   cloud_firestore: ^6.0.3
   flutter:
     sdk: flutter
-<<<<<<< HEAD
+
   image_picker: ^1.1.1
 
-  cupertino_icons: ^1.0.8
-=======
+
   google_fonts: ^6.3.2
->>>>>>> origin/feature/login
+
 
 dev_dependencies:
 
@@ -33,17 +32,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-<<<<<<< HEAD
-=======
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
->>>>>>> origin/feature/login
 flutter:
 
   uses-material-design: true
-<<<<<<< HEAD
-=======
 
   # To add assets to your application, add an assets section, like this:
   assets:
@@ -71,4 +65,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
->>>>>>> origin/feature/login
+

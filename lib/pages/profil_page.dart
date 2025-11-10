@@ -11,7 +11,7 @@ class ProfilPage extends StatelessWidget {
           "Profil & Pengaturan",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF4CAF50),
+        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -111,7 +111,7 @@ class ProfilPage extends StatelessWidget {
             color: Colors.green.shade100,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, color: Colors.green),
+          child: Icon(icon, color: const Color.fromARGB(255, 167, 252, 219)),
         ),
         title: Text(
           title,
