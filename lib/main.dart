@@ -1,6 +1,3 @@
-// import 'package:dailynutryapp/views/auth/login_page.dart';
-// import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
-// import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
 import 'package:dailynutryapp/views/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
@@ -22,10 +19,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'DailyNutryApp',
       home: SplashScreenWidget(),
-      // routes: {
-      //   '/home' : (context) => HomePage()
-      // },
-      // home: SplashScreen(),
     );
   }
 }
