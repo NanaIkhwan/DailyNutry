@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "724631896637",
+    "project_id": "dailynutryapp",
+    "storage_bucket": "dailynutryapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724631896637:android:5713d1fbc6bf61864b2054",
+        "android_client_info": {
+          "package_name": "com.example.dailynutryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEzpz-HJUc3QIA_CuDfgBEjnNNhgQ36YA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
