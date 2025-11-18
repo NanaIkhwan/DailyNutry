@@ -8,7 +8,7 @@ class ChatbotPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Halaman Chatbot'),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 20, 216, 79),
       ),
       body: const Center(child: Text('Ini halaman chatbot')),
     );

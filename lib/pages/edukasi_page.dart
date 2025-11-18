@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EdukasiPage extends StatelessWidget {
-  const EdukasiPage({Key? key}) : super(key: key);
+  const EdukasiPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +29,10 @@ class EdukasiPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edukasi', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+        title:  Text('Edukasi', style: TextStyle(color: Colors.white)),
+        backgroundColor:  Color.fromARGB(255, 20, 216, 79),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon:  Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context); // tombol kembali
           },
@@ -62,7 +63,7 @@ class EdukasiPage extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.book,
-                      color: const Color.fromARGB(255, 167, 252, 219),
+                      color:  Color.fromARGB(255, 167, 252, 219),
                       size: 24,
                     ),
                   ),
@@ -85,7 +86,7 @@ class EdukasiPage extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 167, 252, 219),
+                              color:  Color.fromARGB(255, 167, 252, 219),
                             ),
                           ),
                         ),

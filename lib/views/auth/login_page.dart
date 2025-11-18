@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -22,13 +24,37 @@ class _LoginState extends State<Login> {
         email: email.text.trim(),
         password: password.text.trim(),
       );
-      // pindah ke home jika berhasil
-      print('login berhasil');
+
+      if (!mounted) return; // ⬅️ Tambahkan ini
+
+      // ⬅️ Tambahkan ini: Sync user ke Flask
+      await syncUserToFlask();
+
+      // print('login berhasil');
       Navigator.pushReplacementNamed(context, '/beranda');
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return; // ⬅️ Tambahkan ini juga
+
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.message ?? 'Login gagal')));
+    }
+  }
+
+  Future<void> syncUserToFlask() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      final token = await user.getIdToken();
+
+      await http.post(
+        Uri.parse("http://127.0.0.1:5000/api/sync-user"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"token": token, "email": user.email}),
+      );
+    } catch (e) {
+      print("Gagal sync ke Flask: $e");
     }
   }
 
@@ -47,13 +73,21 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 50),
               TextField(
                 controller: email,
-                decoration: const InputDecoration(hintText: 'Masukkan Email'),
+                decoration: const InputDecoration(
+                  label: Text('Masukkan Email'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
               ),
               const SizedBox(height: 30),
               TextField(
                 controller: password,
                 decoration: const InputDecoration(
-                  hintText: 'Masukkan Password',
+                  label: Text("Masukkan Password"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                 ),
                 obscureText: true,
               ),
@@ -65,7 +99,7 @@ class _LoginState extends State<Login> {
                   foregroundColor: Colors.black,
                   side: BorderSide(color: Colors.black),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   minimumSize: Size(270, 45),
                 ),
@@ -84,7 +118,7 @@ class _LoginState extends State<Login> {
                   foregroundColor: Colors.black,
                   side: BorderSide(color: Colors.greenAccent, width: 2),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   minimumSize: Size(270, 45),
                 ),

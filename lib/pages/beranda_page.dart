@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'chatbotpage.dart';
 import 'riwayat_page.dart';
 import 'edukasi_page.dart';
-import 'profil_page.dart';
+// import 'profil_page.dart';
 import 'package:dailynutryapp/upload_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class BerandaPage extends StatefulWidget {
   // final User? user;
-  const BerandaPage({Key? key}) : super(key: key);
+  const BerandaPage({super.key});
 
   @override
   State<BerandaPage> createState() => _BerandaPageState();
@@ -23,7 +22,7 @@ class _BerandaPageState extends State<BerandaPage> {
     const RiwayatPage(),
     const UploadPage(),
     const EdukasiPage(),
-    const ProfilPage(),
+    // const ProfilPage(),
   ];
 
   @override
@@ -33,7 +32,7 @@ class _BerandaPageState extends State<BerandaPage> {
 
       // Tombol ChatBot di pojok kanan bawah
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+        backgroundColor: const Color.fromARGB(255, 20, 216, 79),
         onPressed: () {
           Navigator.push(
             context,
@@ -59,7 +58,7 @@ class _BerandaPageState extends State<BerandaPage> {
             });
           }
         },
-        selectedItemColor: const Color.fromARGB(255, 167, 252, 219),
+        selectedItemColor: const Color.fromARGB(255, 20, 216, 79),
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: const [
@@ -76,7 +75,7 @@ class _BerandaPageState extends State<BerandaPage> {
 
 class BerandaUtama extends StatefulWidget {
   // final User? user;
-  const BerandaUtama({Key? key}) : super(key: key);
+  const BerandaUtama({super.key});
 
   @override
   State<BerandaUtama> createState() => _BerandaUtamaState();
@@ -94,8 +93,8 @@ class _BerandaUtamaState extends State<BerandaUtama> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(255, 167, 252, 219),
-                const Color.fromARGB(255, 167, 252, 219),
+                Color.fromARGB(255, 20, 216, 79),
+                Color.fromARGB(255, 167, 252, 219),
               ],
             ),
             borderRadius: BorderRadius.only(
@@ -111,11 +110,11 @@ class _BerandaUtamaState extends State<BerandaUtama> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '👋',
+                          "Hallo, ${FirebaseAuth.instance.currentUser?.displayName ?? 'User'} 👋",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,

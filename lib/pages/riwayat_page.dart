@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RiwayatPage extends StatelessWidget {
-  const RiwayatPage({Key? key}) : super(key: key);
+  const RiwayatPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class RiwayatPage extends StatelessWidget {
           'Riwayat Pemeriksaan',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+        backgroundColor:  Color.fromARGB(255, 20, 216, 79),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {

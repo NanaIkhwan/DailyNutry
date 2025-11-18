@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Daily Nutri App',
+      title: 'Cek Komposisi App',
 
       // Tema dari full_project (ini penting, jangan dihapus)
       theme: ThemeData(

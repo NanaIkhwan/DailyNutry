@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class UploadPage extends StatefulWidget {
-  const UploadPage({Key? key}) : super(key: key);
+  const UploadPage({super.key});
 
   @override
   State<UploadPage> createState() => _UploadPageState();
@@ -22,12 +22,15 @@ class _UploadPageState extends State<UploadPage> {
         imageQuality: 85,
       );
 
+      if (!mounted) return; // ⬅️ Tambahkan ini
+
       if (pickedFile != null) {
         setState(() {
           _selectedImage = File(pickedFile.path);
         });
       }
     } catch (e) {
+      if (!mounted) return; // ⬅️ Tambahkan ini juga
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Error picking image: $e')));
@@ -58,7 +61,7 @@ class _UploadPageState extends State<UploadPage> {
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: const Color.fromARGB(255, 167, 252, 219),
+                color: Color.fromARGB(255, 20, 216, 79),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
@@ -190,12 +193,7 @@ class _UploadPageState extends State<UploadPage> {
                       child: ElevatedButton(
                         onPressed: _submitPhoto,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(
-                            255,
-                            167,
-                            252,
-                            219,
-                          ),
+                          backgroundColor: Color.fromARGB(255, 20, 216, 79),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),

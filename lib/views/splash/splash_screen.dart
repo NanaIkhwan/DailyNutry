@@ -32,7 +32,7 @@ class SplashScreenWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Text(
-                "DailyNutry",
+                "CekKomposisi",
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.w400,
@@ -45,7 +45,8 @@ class SplashScreenWidget extends StatelessWidget {
       nextScreen: const Wrapper(),
       splashIconSize: 450, // biarkan cukup besar, tapi masih muat di layar
       duration: 5000,
-      backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+      backgroundColor: const Color.fromARGB(255, 20, 216, 79),
+      // const Color.fromARGB(255, 167, 252, 219),
     );
   }
 }

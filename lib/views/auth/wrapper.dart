@@ -1,5 +1,5 @@
 import 'package:dailynutryapp/pages/beranda_page.dart';
-import 'package:dailynutryapp/pages/dashboard_page.dart';
+// import 'package:dailynutryapp/pages/dashboard_page.dart';
 import 'package:dailynutryapp/views/auth/login_page.dart';
 // import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
