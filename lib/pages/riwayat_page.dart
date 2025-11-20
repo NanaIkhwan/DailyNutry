@@ -6,13 +6,12 @@ class RiwayatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> riwayat = [
-      // {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': 'Aman'},
-      // {'produk': 'Keripik Pedas', 'tanggal': '7 Nov 2025', 'status': 'Waspada'},
-      // {
-      //   'produk': 'Minuman Bersoda',
-      //   'tanggal': '6 Nov 2025',
-      //   'status': 'Bahaya',
-      // },
+      {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': ''},
+      {
+        'produk': 'Minuman Bersoda',
+        'tanggal': '6 Nov 2025',
+        'status': '',
+      },
     ];
 
     return Scaffold(
@@ -21,7 +20,7 @@ class RiwayatPage extends StatelessWidget {
           'Riwayat Pemeriksaan',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+        backgroundColor: Color.fromARGB(255, 20, 216, 79),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -46,23 +45,7 @@ class RiwayatPage extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(item['tanggal']!),
-              trailing: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(item['status']!),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  item['status']!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              trailing: const SizedBox.shrink(), // <-- status dihilangkan total
             ),
           );
         },
@@ -70,6 +53,7 @@ class RiwayatPage extends StatelessWidget {
     );
   }
 
+  // Tetap dipertahankan untuk menjaga struktur dasar (tidak digunakan lagi)
   Color _getStatusColor(String status) {
     if (status == 'Aman') return Colors.green;
     if (status == 'Waspada') return Colors.orange;

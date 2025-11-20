@@ -18,18 +18,18 @@ class EdukasiPage extends StatelessWidget {
       //   'isi':
       //       'Pastikan produk makanan tidak melewati tanggal kedaluwarsa sebelum dibeli.',
       // },
-      // {
-      //   'kategori': 'Kesehatan',
-      //   'judul': 'Kurangi Gula dan Lemak',
-      //   'isi':
-      //       'Konsumsi gula dan lemak berlebih dapat meningkatkan risiko penyakit jantung.',
-      // },
+      {
+        'kategori': 'Kesehatan',
+        'judul': 'Kurangi Gula dan Lemak',
+        'isi':
+            'Konsumsi gula dan lemak berlebih dapat meningkatkan risiko penyakit jantung.',
+      },
     ];
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edukasi', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+        backgroundColor: Color.fromARGB(255, 20, 216, 79),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -62,7 +62,7 @@ class EdukasiPage extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.book,
-                      color: const Color.fromARGB(255, 167, 252, 219),
+                      color: Color.fromARGB(255, 20, 216, 79),
                       size: 24,
                     ),
                   ),
@@ -85,7 +85,7 @@ class EdukasiPage extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 167, 252, 219),
+                              color: Color.fromARGB(255, 20, 216, 79),
                             ),
                           ),
                         ),
