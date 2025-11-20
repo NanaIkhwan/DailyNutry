@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Lottie.asset('images/RegisLeady.json', height: 250),
+            Lottie.asset('assets/images/RegisLeady.json', height: 250),
             SizedBox(height: 50),
             Text("Daftar", style: GoogleFonts.roboto(fontSize: 50)),
             SizedBox(height: 50),
@@ -81,7 +81,7 @@ class _RegisterState extends State<Register> {
             ElevatedButton(
               onPressed: (() => signUp()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 117, 236, 179),
+                backgroundColor: Color.fromARGB(255, 20, 216, 79),
                 foregroundColor: Colors.black,
                 side: BorderSide(color: Colors.black),
                 shape: RoundedRectangleBorder(

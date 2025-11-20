@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'edit_profile_page.dart';
+
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -112,8 +114,9 @@ class _ProfilPageState extends State<ProfilPage> {
             leading: const Icon(Icons.edit, color: Colors.green),
             title: const Text("Edit Profil"),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Fitur belum tersedia")),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const EditProfilePage()),
               );
             },
           ),

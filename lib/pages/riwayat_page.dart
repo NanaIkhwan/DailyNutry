@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'beranda_page.dart';
 
 class RiwayatPage extends StatelessWidget {
   const RiwayatPage({Key? key}) : super(key: key);
@@ -24,7 +25,10 @@ class RiwayatPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BerandaPage()),
+            );
           },
         ),
       ),
