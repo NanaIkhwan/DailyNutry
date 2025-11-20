@@ -1,4 +1,3 @@
-// import 'package:dailynutryapp/pages/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,11 +8,12 @@ import 'pages/beranda_page.dart';
 import 'pages/chatbotpage.dart';
 import 'upload_page.dart';
 
-// Halaman splash dari feature/login
+// Halaman splash dan login
 import 'views/splash/splash_screen.dart';
+import 'views/auth/login_page.dart'; //  sesuai struktur folder kamu
 
 void main() async {
-  // Pastikan Flutter dan Firebase sudah siap sebelum runApp
+  // Pastikan Flutter dan Firebase siap
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -29,22 +29,23 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Daily Nutri App',
 
-      // Tema utama aplikasi
+      // Tema aplikasi
       theme: ThemeData(
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Roboto',
       ),
 
-      // Halaman pertama yang muncul (Splash Screen)
+      // Halaman pertama (SplashScreen)
       home: const SplashScreenWidget(),
 
-      // Route ke halaman lain
+      // Semua route aplikasi
       routes: {
         '/home': (context) => const BerandaPage(),
         '/beranda': (context) => const BerandaPage(),
         '/upload': (context) => const UploadPage(),
         '/chatbot': (context) => const ChatbotPage(),
+        '/login': (context) => const Login(), // penting untuk logout
       },
     );
   }
