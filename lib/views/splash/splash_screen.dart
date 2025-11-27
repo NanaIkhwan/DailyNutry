@@ -45,12 +45,7 @@ class SplashScreenWidget extends StatelessWidget {
       nextScreen: const Wrapper(),
       splashIconSize: 450, // biarkan cukup besar, tapi masih muat di layar
       duration: 5000,
-<<<<<<< HEAD
-      backgroundColor: const Color.fromARGB(255, 20, 216, 79),
-      // const Color.fromARGB(255, 167, 252, 219),
-=======
       backgroundColor: Colors.green,
->>>>>>> origin/full_project-part-2
     );
   }
 }
