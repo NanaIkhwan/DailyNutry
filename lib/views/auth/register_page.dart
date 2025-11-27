@@ -22,9 +22,9 @@ class _RegisterState extends State<Register> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-            email: email.text.trim(),
-            password: password.text.trim(),
-          );
+        email: email.text.trim(),
+        password: password.text.trim(),
+      );
 
       // simpan nama ke firebase auth
       await userCredential.user!.updateDisplayName(username.text.trim());
@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Lottie.asset('images/RegisLeady.json', height: 250),
+            Lottie.asset('assets/images/RegisLeady.json', height: 250),
             SizedBox(height: 50),
             Text("Daftar", style: GoogleFonts.roboto(fontSize: 50)),
             SizedBox(height: 50),
@@ -81,7 +81,7 @@ class _RegisterState extends State<Register> {
             ElevatedButton(
               onPressed: (() => signUp()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 117, 236, 179),
+                backgroundColor: Color.fromARGB(255, 20, 216, 79),
                 foregroundColor: Colors.black,
                 side: BorderSide(color: Colors.black),
                 shape: RoundedRectangleBorder(
