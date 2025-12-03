@@ -15,24 +15,15 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
   signUp() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: email.text.trim(),
-            password: password.text.trim(),
-          );
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email.text,
+      password: password.text,
+    );
 
-      // simpan nama ke firebase auth
-      await userCredential.user!.updateDisplayName(username.text.trim());
-
-      Get.offAll(Wrapper());
-    } on FirebaseAuthException catch (e) {
-      Get.snackbar("Error", e.message ?? "Gagal daftar");
-    }
+    Get.offAll(Wrapper());
   }
 
   @override
@@ -49,43 +40,23 @@ class _RegisterState extends State<Register> {
             SizedBox(height: 50),
             TextField(
               controller: email,
-              decoration: InputDecoration(
-                label: Text('Masukkan Email'),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
-            ),
-            SizedBox(height: 30),
-            TextField(
-              controller: username,
-              decoration: InputDecoration(
-                label: Text('Masukkan Username'),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
+              decoration: InputDecoration(hintText: 'Masukkan Email'),
             ),
             SizedBox(height: 30),
             TextField(
               controller: password,
-              decoration: InputDecoration(
-                label: Text("Masukkan Password"),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
+              decoration: InputDecoration(hintText: 'Masukkan Password'),
             ),
             const SizedBox(height: 40),
 
             ElevatedButton(
               onPressed: (() => signUp()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 117, 236, 179),
+                backgroundColor: const  Color.fromARGB(255, 43, 200, 140),
                 foregroundColor: Colors.black,
                 side: BorderSide(color: Colors.black),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 minimumSize: Size(270, 45),
               ),

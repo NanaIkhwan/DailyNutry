@@ -86,7 +86,7 @@ class _BerandaUtamaState extends State<BerandaUtama> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Header atas
+        // whatap AI
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
@@ -106,7 +106,7 @@ class _BerandaUtamaState extends State<BerandaUtama> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Baris: sapaan dan tombol lonceng
+                // Baris: sapaan dan notifikasi
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

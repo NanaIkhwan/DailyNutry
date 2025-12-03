@@ -11,7 +11,7 @@
 //           "Profil & Pengaturan",
 //           style: TextStyle(color: Colors.white),
 //         ),
-//         backgroundColor: const Color.fromARGB(255, 167, 252, 219),
+//         backgroundColor: const  Color.fromARGB(255, 43, 200, 140),
 //         leading: IconButton(
 //           icon: const Icon(Icons.arrow_back, color: Colors.white),
 //           onPressed: () {
@@ -67,33 +67,33 @@
 //           ),
 //           const SizedBox(height: 16),
 
-          // Daftar menu pengaturan
-          // _buildSettingItem(
-          //   icon: Icons.dining,
-          //   title: "Batas Konsumsi Harian",
-          //   subtitle: "Atur batas maksimal konsumsi harian",
-          // ),
-          // _buildSettingItem(
-          //   icon: Icons.notifications,
-          //   title: "Notifikasi",
-          //   subtitle: "Atur pemberitahuan aplikasi",
-          // ),
-          // _buildSettingItem(
-          //   icon: Icons.info,
-          //   title: "Tentang Aplikasi",
-          //   subtitle: "Versi 1.0.0",
-          // ),
-          // _buildSettingItem(
-          //   icon: Icons.help,
-          //   title: "Bantuan & Dukungan",
-          //   subtitle: "Hubungi kami",
-          // ),
-  //       ],
-  //     ),
-  //   );
-  // }
+//           // Daftar menu pengaturan
+//           // _buildSettingItem(
+//           //   icon: Icons.dining,
+//           //   title: "Batas Konsumsi Harian",
+//           //   subtitle: "Atur batas maksimal konsumsi harian",
+//           // ),
+//           // _buildSettingItem(
+//           //   icon: Icons.notifications,
+//           //   title: "Notifikasi",
+//           //   subtitle: "Atur pemberitahuan aplikasi",
+//           // ),
+//           // _buildSettingItem(
+//           //   icon: Icons.info,
+//           //   title: "Tentang Aplikasi",
+//           //   subtitle: "Versi 1.0.0",
+//           // ),
+//           // _buildSettingItem(
+//           //   icon: Icons.help,
+//           //   title: "Bantuan & Dukungan",
+//           //   subtitle: "Hubungi kami",
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
 
-  // Widget menu pengaturan sederhana
+//   // Widget menu pengaturan sederhana
 //   Widget _buildSettingItem({
 //     required IconData icon,
 //     required String title,
