@@ -3,13 +3,17 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// Import halaman fitur
-import 'views/splash/splash_screen.dart'; // Splash dari branch kamu
-import 'pages/beranda_page.dart'; // Beranda dari full_project
-import 'pages/chatbotpage.dart'; // Chatbot
-import 'upload_page.dart'; // Upload Page
+// Halaman utama dari project kamu
+import 'pages/beranda_page.dart';
+import 'pages/chatbotpage.dart';
+import 'upload_page.dart';
+
+// Halaman splash dan login
+import 'views/splash/splash_screen.dart';
+import 'views/auth/login_page.dart'; //  sesuai struktur folder kamu
 
 void main() async {
+  // Pastikan Flutter dan Firebase siap
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
@@ -24,22 +28,23 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cek Komposisi App',
 
-      // Tema dari full_project (ini penting, jangan dihapus)
+      // Tema aplikasi
       theme: ThemeData(
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Roboto',
       ),
 
-      // Halaman awal aplikasi (punya kamu)
+      // Halaman pertama (SplashScreen)
       home: const SplashScreenWidget(),
 
-      // Routing lengkap
+      // Semua route aplikasi
       routes: {
         '/home': (context) => const BerandaPage(),
         '/beranda': (context) => const BerandaPage(),
         '/upload': (context) => const UploadPage(),
         '/chatbot': (context) => const ChatbotPage(),
+        '/login': (context) => const Login(), // penting untuk logout
       },
     );
   }

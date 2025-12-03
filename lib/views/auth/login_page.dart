@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,7 +17,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool _obscurePassword = true; // untuk show/hide password
 
+  // Fungsi login Firebase
   signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -25,38 +27,60 @@ class _LoginState extends State<Login> {
         password: password.text.trim(),
       );
 
-      if (!mounted) return; // ⬅️ Tambahkan ini
+      if (!mounted) return;
 
-      // ⬅️ Tambahkan ini: Sync user ke Flask
-      await syncUserToFlask();
+      // Sync user ke Flask
+      // await syncUserToFlask();
 
-      // print('login berhasil');
       Navigator.pushReplacementNamed(context, '/beranda');
     } on FirebaseAuthException catch (e) {
-      if (!mounted) return; // ⬅️ Tambahkan ini juga
+      if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.message ?? 'Login gagal')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message ?? 'Login gagal')));
     }
   }
 
-  Future<void> syncUserToFlask() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
+  // Fungsi sync ke Flask
+  // Future<void> syncUserToFlask() async {
+  //   try {
+  //     final user = FirebaseAuth.instance.currentUser;
+  //     if (user == null) return;
 
-      final token = await user.getIdToken();
+  //     final token = await user.getIdToken();
 
-      await http.post(
-        Uri.parse("http://127.0.0.1:5000/api/sync-user"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"token": token, "email": user.email}),
-      );
-    } catch (e) {
-      print("Gagal sync ke Flask: $e");
-    }
-  }
+  //     final response = await http.post(
+  //       Uri.parse("http://127.0.0.1:5000/api/sync-user"),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({"token": token, "email": user.email}),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       print("Sync ke Flask berhasil");
+  //     } else {
+  //       print("Sync ke Flask gagal: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     print("Gagal sync ke Flask: $e");
+  //   }
+  // }
+
+  // Future<void> syncUserToFlask() async {
+  //   try {
+  //     final user = FirebaseAuth.instance.currentUser;
+  //     if (user == null) return;
+
+  //     final token = await user.getIdToken();
+
+  //     await http.post(
+  //       Uri.parse("http://127.0.0.1:5000/api/sync-user"),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({"token": token, "email": user.email}),
+  //     );
+  //   } catch (e) {
+  //     print("Gagal sync ke Flask: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +90,15 @@ class _LoginState extends State<Login> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              // Tambahkan animasi di sini
-              Lottie.asset('images/welcome.json', height: 250),
+              // Animasi Lottie
+              Lottie.asset('assets/images/welcome.json', height: 250),
               const SizedBox(height: 50),
+
+              // Judul
               Text("Masuk", style: GoogleFonts.roboto(fontSize: 50)),
               const SizedBox(height: 50),
+
+              // Input email
               TextField(
                 controller: email,
                 decoration: const InputDecoration(
@@ -81,46 +109,61 @@ class _LoginState extends State<Login> {
                 ),
               ),
               const SizedBox(height: 30),
+
+              // Input password dengan show/hide
               TextField(
                 controller: password,
-                decoration: const InputDecoration(
-                  label: Text("Masukkan Password"),
-                  border: OutlineInputBorder(
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  label: const Text("Masukkan Password"),
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                 ),
-                obscureText: true,
               ),
               const SizedBox(height: 40),
+
+              // Tombol login
               ElevatedButton(
                 onPressed: signIn,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 117, 236, 179),
+                  backgroundColor: Color.fromARGB(255, 20, 216, 79),
                   foregroundColor: Colors.black,
-                  side: BorderSide(color: Colors.black),
+                  side: const BorderSide(color: Colors.black),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  minimumSize: Size(270, 45),
+                  minimumSize: const Size(270, 45),
                 ),
                 child: const Text("Masuk"),
               ),
+              const SizedBox(height: 50),
 
-              SizedBox(height: 50),
-
-              Text('Belum punya akun ?'),
-
+              // Link daftar
+              const Text('Belum punya akun ?'),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => Get.to(const Register()),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
-                  side: BorderSide(color: Colors.greenAccent, width: 2),
+                  side: const BorderSide(color:Color.fromARGB(255, 20, 216, 79), width: 2),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  minimumSize: Size(270, 45),
+                  minimumSize: const Size(270, 45),
                 ),
                 child: const Text('Daftar Sekarang'),
               ),
