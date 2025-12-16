@@ -5,7 +5,7 @@ import 'chatbotpage.dart';
 import 'riwayat_page.dart';
 import 'package:dailynutryapp/upload_page.dart';
 import 'edukasi_page.dart';
-// import 'profil_page.dart';
+import 'profil_page.dart';
 
 class BerandaPage extends StatefulWidget {
   const BerandaPage({super.key});
@@ -22,7 +22,7 @@ class _BerandaPageState extends State<BerandaPage> {
     const RiwayatPage(),
     const UploadPage(),
     const EdukasiPage(),
-    // const ProfilPage(),
+    const ProfilPage(),
   ];
 
   @override
@@ -92,7 +92,7 @@ class _BerandaUtamaState extends State<BerandaUtama> {
     final now = DateTime.now();
     tanggalMinggu = List.generate(
       7,
-          (i) => "${now.subtract(Duration(days: 6 - i)).day}",
+      (i) => "${now.subtract(Duration(days: 6 - i)).day}",
     );
   }
 
@@ -138,8 +138,11 @@ class _BerandaUtamaState extends State<BerandaUtama> {
                       ],
                     ),
                     IconButton(
-                      icon: const Icon(Icons.notifications,
-                          color: Colors.white, size: 28),
+                      icon: const Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                        size: 28,
+                      ),
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Belum ada notifikasi")),
@@ -150,20 +153,6 @@ class _BerandaUtamaState extends State<BerandaUtama> {
                 ),
 
                 const SizedBox(height: 16),
-
-                // ------------------ Search --------------------
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: "Cari produk...",
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

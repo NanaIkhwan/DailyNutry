@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'pages/hasil_upload_page.dart';
+// import 'package:flutter/foundation.dart'; // untuk kIsWeb
 
 class UploadPage extends StatefulWidget {
   const UploadPage({super.key});
@@ -16,23 +17,54 @@ class _UploadPageState extends State<UploadPage> {
 
   Future<void> _pickImage() async {
     try {
-      final XFile? pickedFile = await _picker.pickImage(
+      final pickedFile = await _picker.pickImage(
         source: ImageSource.gallery,
         imageQuality: 85,
         maxWidth: 1800,
         maxHeight: 1800,
       );
+      // try {
+      //   XFile? pickedFile;
 
-      if (!mounted) return; // ⬅️ Tambahkan ini
+      // ---- WEB ----
+      // if (kIsWeb) {
+      //   pickedFile = await _picker.pickImage(
+      //     source: ImageSource.gallery,
+      //     imageQuality: 85,
+      //     maxWidth: 1800,
+      //     maxHeight: 1800,
+      //   );
+      // }
+      // ---- ANDROID / iOS ----
+      // else {
+      //   pickedFile = await _picker.pickImage(
+      //     source: ImageSource.gallery,
+      //     imageQuality: 85,
+      //     maxWidth: 1800,
+      //     maxHeight: 1800,
+      //   );
+      // }
+
+      if (!mounted) return;
 
       if (pickedFile != null) {
         setState(() {
           _selectedImage = File(pickedFile.path);
+          // Web menggunakan XFile langsung
+          // Mobile menggunakan File
+          // if (kIsWeb) {
+          //   _selectedImage = File(pickedFile.path);
+          // } else {
+          //   _selectedImage = File(pickedFile.path);
+          // }
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error picking image: $e')));
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error picking image: $e')));
     }
   }
 
@@ -47,8 +79,7 @@ class _UploadPageState extends State<UploadPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            HasilUploadPage(imagePath: _selectedImage!.path),
+        builder: (context) => HasilUploadPage(imagePath: _selectedImage!.path),
       ),
     );
   }
@@ -114,36 +145,39 @@ class _UploadPageState extends State<UploadPage> {
                         ),
                         child: _selectedImage == null
                             ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundColor: Colors.grey[600],
-                              child: const Icon(Icons.cloud_upload,
-                                  size: 40, color: Colors.white),
-                            ),
-                            const SizedBox(height: 10),
-                            const Text(
-                              "Tap untuk unggah foto",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Text(
-                              "PNG atau JPG (maks 5MB)",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        )
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: Colors.grey[600],
+                                    child: const Icon(
+                                      Icons.cloud_upload,
+                                      size: 40,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Tap untuk unggah foto",
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const Text(
+                                    "PNG atau JPG (maks 5MB)",
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              )
                             : ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.file(
-                            _selectedImage!,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.file(
+                                  _selectedImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                       ),
                     ),
 

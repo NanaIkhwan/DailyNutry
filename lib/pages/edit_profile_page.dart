@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({super.key});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -31,6 +31,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       await user?.updateDisplayName(_nameController.text);
       await user?.reload();
+
+      if (!mounted) return;
 
       setState(() => _loading = false);
 
