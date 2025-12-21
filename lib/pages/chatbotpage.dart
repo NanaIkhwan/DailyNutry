@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ChatbotPage extends StatefulWidget {
   const ChatbotPage({super.key});
@@ -11,37 +13,45 @@ class _ChatbotPageState extends State<ChatbotPage> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
 
-  // 🔹 Dummy chatbot, nanti bisa diganti AI beneran
-  String _botReply(String userMessage) {
-    userMessage = userMessage.toLowerCase();
+  Future<String> _sendToChatbotAPI(String message) async {
+    final url = Uri.parse("https://june-chattable-tora.ngrok-free.dev/chatbot");
 
-    if (userMessage.contains("gula")) {
-      return "Konsumsi gula berlebih berisiko diabetes. Batas harian: 50g. Coba kurangi minuman manis ya! 🍬";
-    }
-    if (userMessage.contains("garam")) {
-      return "Batas konsumsi garam harian adalah 6g. Terlalu banyak bisa meningkatkan tekanan darah. 🧂";
-    }
-    if (userMessage.contains("lemak")) {
-      return "Lemak baik diperlukan tubuh, tapi lemak jenuh harus dibatasi. Batas harian ±70g. 🍟";
-    }
-    if (userMessage.contains("aman") || userMessage.contains("makanan")) {
-      return "Untuk mengetahui keamanan makanan, silakan gunakan fitur Upload Foto di Daily Nutri. Saya bisa bantu menjelaskan kandungan nutrisinya! 🍽️";
-    }
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"message": message}),
+      );
 
-    return "Baik, saya bantu! Coba tanyakan tentang gula, garam, lemak, keamanan makanan, atau nutrisi harian. 😊";
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data["reply"];
+      } else {
+        return "Server error (${response.statusCode})";
+      }
+    } catch (e) {
+      return "Gagal terhubung ke server";
+    }
   }
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_controller.text.isEmpty) return;
 
     String userMsg = _controller.text;
 
     setState(() {
       _messages.add({"sender": "user", "text": userMsg});
-      _messages.add({"sender": "bot", "text": _botReply(userMsg)});
+      _messages.add({"sender": "bot", "text": "Mengetik..."});
     });
 
     _controller.clear();
+
+    final reply = await _sendToChatbotAPI(userMsg);
+
+    setState(() {
+      _messages.removeLast(); // hapus "Mengetik..."
+      _messages.add({"sender": "bot", "text": reply});
+    });
   }
 
   @override
@@ -64,8 +74,9 @@ class _ChatbotPageState extends State<ChatbotPage> {
                 bool isUser = _messages[index]["sender"] == "user";
 
                 return Align(
-                  alignment:
-                  isUser ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 6),
                     padding: const EdgeInsets.all(12),
@@ -78,7 +89,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                           color: Colors.black12,
                           blurRadius: 4,
                           offset: Offset(1, 2),
-                        )
+                        ),
                       ],
                     ),
                     child: Text(
@@ -100,7 +111,11 @@ class _ChatbotPageState extends State<ChatbotPage> {
             decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, -1))
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 4,
+                  offset: Offset(0, -1),
+                ),
               ],
             ),
             child: Row(
@@ -112,7 +127,10 @@ class _ChatbotPageState extends State<ChatbotPage> {
                       hintText: "Tanya tentang nutrisi...",
                       filled: true,
                       fillColor: Colors.grey.shade100,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none,
@@ -133,7 +151,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                     ),
                     child: const Icon(Icons.send, color: Colors.white),
                   ),
-                )
+                ),
               ],
             ),
           ),

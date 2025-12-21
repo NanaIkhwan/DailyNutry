@@ -32,7 +32,7 @@ class SplashScreenWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Text(
-                "DailyNutry",
+                "CekKomposisi",
                 style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.w400,

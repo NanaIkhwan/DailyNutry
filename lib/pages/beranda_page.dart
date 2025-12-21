@@ -151,20 +151,6 @@ class _BerandaUtamaState extends State<BerandaUtama> {
                 ),
 
                 const SizedBox(height: 16),
-
-                // ------------------ Search --------------------
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: "Cari produk...",
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

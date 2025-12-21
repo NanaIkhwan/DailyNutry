@@ -7,13 +7,10 @@ class RiwayatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> riwayat = [
-      {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': ''},
-      {
-        'produk': 'Minuman Bersoda',
-        'tanggal': '6 Nov 2025',
-        'status': '',
-      },
+      {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': 'Aman'},
+      {'produk': 'Minuman Bersoda', 'tanggal': '6 Nov 2025', 'status': 'Waspada'},
     ];
+
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +46,21 @@ class RiwayatPage extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(item['tanggal']!),
-              trailing: const SizedBox.shrink(), // <-- status dihilangkan total
+              trailing: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: _getStatusColor(item['status']!).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  item['status']!,
+                  style: TextStyle(
+                    color: _getStatusColor(item['status']!),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+// <-- status dihilangkan total
             ),
           );
         },

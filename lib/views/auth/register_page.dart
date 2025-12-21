@@ -39,59 +39,73 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Lottie.asset('assets/images/RegisLeady.json', height: 250),
-            SizedBox(height: 50),
-            Text("Daftar", style: GoogleFonts.roboto(fontSize: 50)),
-            SizedBox(height: 50),
-            TextField(
-              controller: email,
-              decoration: InputDecoration(
-                label: Text('Masukkan Email'),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
-            ),
-            SizedBox(height: 30),
-            TextField(
-              controller: username,
-              decoration: InputDecoration(
-                label: Text('Masukkan Username'),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
-            ),
-            SizedBox(height: 30),
-            TextField(
-              controller: password,
-              decoration: InputDecoration(
-                label: Text("Masukkan Password"),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Lottie.asset('assets/images/RegisLeady.json', height: 250),
+              const SizedBox(height: 30),
 
-            ElevatedButton(
-              onPressed: (() => signUp()),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 20, 216, 79),
-                foregroundColor: Colors.black,
-                side: BorderSide(color: Colors.black),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: Size(270, 45),
+              Text(
+                "Daftar",
+                style: GoogleFonts.roboto(fontSize: 40),
               ),
-              child: Text("Daftar"),
-            ),
-          ],
+              const SizedBox(height: 30),
+
+              TextField(
+                controller: email,
+                decoration: const InputDecoration(
+                  label: Text('Masukkan Email'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              TextField(
+                controller: username,
+                decoration: const InputDecoration(
+                  label: Text('Masukkan Username'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              TextField(
+                controller: password,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  label: Text("Masukkan Password"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              Center(
+                child: ElevatedButton(
+                  onPressed: signUp,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 20, 216, 79),
+                    foregroundColor: Colors.black,
+                    side: const BorderSide(color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: const Size(270, 45),
+                  ),
+                  child: const Text("Daftar"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

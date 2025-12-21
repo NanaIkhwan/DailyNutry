@@ -1,22 +1,112 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class HasilUploadPage extends StatelessWidget {
+class HasilUploadPage extends StatefulWidget {
   final String imagePath;
 
-  const HasilUploadPage({
-    Key? key,
-    required this.imagePath,
-  }) : super(key: key);
+  const HasilUploadPage({super.key, required this.imagePath});
+
+  @override
+  State<HasilUploadPage> createState() => _HasilUploadPageState();
+}
+
+class _HasilUploadPageState extends State<HasilUploadPage> {
+  String? ocrText;
+  bool isLoading = true;
+  List<dynamic> classifiedResults = [];
+
+  List<String> parseIngredients(String text) {
+    return text
+        .toLowerCase()
+        .split(RegExp(r'[,\n]')) // pisah koma & enter
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
+  }
+
+  Future<void> _sendToServer() async {
+    final url = Uri.parse(
+      "https://june-chattable-tora.ngrok-free.dev/analysis/ocr",
+    );
+
+    var request = http.MultipartRequest("POST", url);
+    request.files.add(
+      await http.MultipartFile.fromPath("image", widget.imagePath),
+    );
+
+    try {
+      final response = await request.send();
+      final result = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        final data = json.decode(result);
+        final text = data["extracted_text"];
+
+        // PARSE BAHAN
+        final ingredients = List<String>.from(data["ingredients"]);
+
+        // PANGGIL KLASIFIKASI
+        final classified = await classifyIngredients(ingredients);
+
+        // DEBUG PRINT
+        print("OCR: $text");
+        print("CLASSIFIED: $classified");
+
+        setState(() {
+          ocrText = text;
+          classifiedResults = classified;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          ocrText = "Terjadi kesalahan server.";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        ocrText = "Gagal terhubung ke server: $e";
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<List<dynamic>> classifyIngredients(List<String> ingredients) async {
+    final url = Uri.parse(
+      "https://june-chattable-tora.ngrok-free.dev/analysis/classify",
+    );
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"ingredients": ingredients}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data["results"];
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _sendToServer();
+  }
 
   Widget warnaBulatan(Color warna) {
     return Container(
       width: 14,
       height: 14,
-      decoration: BoxDecoration(
-        color: warna,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: warna, shape: BoxShape.circle),
     );
   }
 
@@ -43,8 +133,7 @@ class HasilUploadPage extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      icon:
-                      const Icon(Icons.arrow_back, color: Colors.white),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
                       onPressed: () => Navigator.pop(context),
                     ),
                     const SizedBox(width: 8),
@@ -55,7 +144,7 @@ class HasilUploadPage extends StatelessWidget {
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -74,7 +163,7 @@ class HasilUploadPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: Image.file(
-                      File(imagePath),
+                      File(widget.imagePath),
                       height: 220,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -88,20 +177,32 @@ class HasilUploadPage extends StatelessWidget {
               // KATEGORI WARNA
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    warnaBulatan(Colors.green),
-                    const SizedBox(width: 6),
-                    const Text("Alami"),
-                    const SizedBox(width: 20),
-                    warnaBulatan(Colors.yellow),
-                    const SizedBox(width: 6),
-                    const Text("Campuran"),
-                    const SizedBox(width: 20),
-                    warnaBulatan(Colors.red),
-                    const SizedBox(width: 6),
-                    const Text("Sintetis"),
-                  ],
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: classifiedResults.map((item) {
+                    final isAlami = item["category"] == "alami";
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        children: [
+                          warnaBulatan(
+                            isAlami ? Colors.green : Colors.red,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            item["ingredient"],
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
 
@@ -112,10 +213,7 @@ class HasilUploadPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "Analisis Komposisi",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
 
@@ -130,8 +228,10 @@ class HasilUploadPage extends StatelessWidget {
                     const SizedBox(width: 10),
                     const Text(
                       "Gula",
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -164,23 +264,20 @@ class HasilUploadPage extends StatelessWidget {
                       children: [
                         warnaBulatan(Colors.green),
                         const SizedBox(width: 8),
-                        const Text("Garam"),
                       ],
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        warnaBulatan(Colors.yellow),
+                        warnaBulatan(Colors.red),
                         const SizedBox(width: 8),
-                        const Text("Tartazine"),
                       ],
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        warnaBulatan(Colors.yellow),
+                        warnaBulatan(Colors.red),
                         const SizedBox(width: 8),
-                        const Text("Natrium Benzoat"),
                       ],
                     ),
                   ],
@@ -191,8 +288,10 @@ class HasilUploadPage extends StatelessWidget {
 
               // BUTTON SIMPAN
               Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -207,8 +306,10 @@ class HasilUploadPage extends StatelessWidget {
                     ),
                     child: const Text(
                       "Simpan Analisis",
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
