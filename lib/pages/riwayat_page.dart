@@ -1,17 +1,49 @@
 import 'package:flutter/material.dart';
 import 'beranda_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class RiwayatPage extends StatelessWidget {
-  const RiwayatPage({Key? key}) : super(key: key);
+class RiwayatPage extends StatefulWidget {
+  const RiwayatPage({super.key});
+
+  @override
+  State<RiwayatPage> createState() => _RiwayatPageState();
+}
+
+class _RiwayatPageState extends State<RiwayatPage> {
+  bool isLoading = true;
+  List<dynamic> riwayat = [];
+
+  Future<void> fetchRiwayat() async {
+    final url = Uri.parse(
+      "https://june-chattable-tora.ngrok-free.dev/analysis/history",
+    );
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          riwayat = data["data"];
+          isLoading = false;
+        });
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRiwayat();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> riwayat = [
-      {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': 'Aman'},
-      {'produk': 'Minuman Bersoda', 'tanggal': '6 Nov 2025', 'status': 'Waspada'},
-    ];
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -29,11 +61,14 @@ class RiwayatPage extends StatelessWidget {
           },
         ),
       ),
-      body: ListView.builder(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: riwayat.length,
         itemBuilder: (context, index) {
           final item = riwayat[index];
+
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -41,38 +76,24 @@ class RiwayatPage extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 10),
             elevation: 2,
             child: ListTile(
-              title: Text(
-                item['produk']!,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+              title: const Text(
+                "Hasil Scan",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(item['tanggal']!),
-              trailing: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(item['status']!).withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  item['status']!,
-                  style: TextStyle(
-                    color: _getStatusColor(item['status']!),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              subtitle: Text(item["created_at"] ?? "-"),
+              trailing: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Gula: ${item["sugar"]} g"),
+                  Text("Garam: ${item["salt"]} g"),
+                  Text("Lemak: ${item["fat"]} g"),
+                ],
               ),
-// <-- status dihilangkan total
             ),
           );
         },
       ),
     );
-  }
-
-  // Tetap dipertahankan untuk menjaga struktur dasar (tidak digunakan lagi)
-  Color _getStatusColor(String status) {
-    if (status == 'Aman') return Colors.green;
-    if (status == 'Waspada') return Colors.orange;
-    if (status == 'Bahaya') return Colors.red;
-    return Colors.grey;
   }
 }

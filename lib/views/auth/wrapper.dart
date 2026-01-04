@@ -1,32 +1,32 @@
-import 'package:dailynutryapp/pages/beranda_page.dart';
-import 'package:dailynutryapp/pages/dashboard_page.dart';
-import 'package:dailynutryapp/views/auth/login_page.dart';
-// import 'package:dailynutryapp/views/dashboard/dashboard_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Wrapper extends StatefulWidget {
+import 'package:dailynutryapp/pages/beranda_page.dart';
+import 'package:dailynutryapp/views/auth/login_page.dart';
+
+class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
 
   @override
-  State<Wrapper> createState() => _WrapperState();
-}
-
-class _WrapperState extends State<Wrapper> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return BerandaPage();
-          } else {
-            return Login();
-          }
-        },
-      ),
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        // loading
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        // sudah login
+        if (snapshot.hasData) {
+          return const BerandaPage();
+        }
+
+        // belum login
+        return const Login();
+      },
     );
   }
 }
