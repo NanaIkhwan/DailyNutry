@@ -1,19 +1,49 @@
 import 'package:flutter/material.dart';
+import 'beranda_page.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class RiwayatPage extends StatelessWidget {
-  const RiwayatPage({Key? key}) : super(key: key);
+class RiwayatPage extends StatefulWidget {
+  const RiwayatPage({super.key});
+
+  @override
+  State<RiwayatPage> createState() => _RiwayatPageState();
+}
+
+class _RiwayatPageState extends State<RiwayatPage> {
+  bool isLoading = true;
+  List<dynamic> riwayat = [];
+
+  Future<void> fetchRiwayat() async {
+    final url = Uri.parse(
+      "https://june-chattable-tora.ngrok-free.dev/analysis/history",
+    );
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          riwayat = data["data"];
+          isLoading = false;
+        });
+      } else {
+        isLoading = false;
+      }
+    } catch (e) {
+      isLoading = false;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRiwayat();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> riwayat = [
-      {'produk': 'Air Mineral', 'tanggal': '8 Nov 2025', 'status': ''},
-      {
-        'produk': 'Minuman Bersoda',
-        'tanggal': '6 Nov 2025',
-        'status': '',
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -24,15 +54,21 @@ class RiwayatPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BerandaPage()),
+            );
           },
         ),
       ),
-      body: ListView.builder(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: riwayat.length,
         itemBuilder: (context, index) {
           final item = riwayat[index];
+
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -40,24 +76,24 @@ class RiwayatPage extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 10),
             elevation: 2,
             child: ListTile(
-              title: Text(
-                item['produk']!,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+              title: const Text(
+                "Hasil Scan",
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(item['tanggal']!),
-              trailing: const SizedBox.shrink(), // <-- status dihilangkan total
+              subtitle: Text(item["created_at"] ?? "-"),
+              trailing: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Gula: ${item["sugar"]} g"),
+                  Text("Garam: ${item["salt"]} g"),
+                  Text("Lemak: ${item["fat"]} g"),
+                ],
+              ),
             ),
           );
         },
       ),
     );
-  }
-
-  // Tetap dipertahankan untuk menjaga struktur dasar (tidak digunakan lagi)
-  Color _getStatusColor(String status) {
-    if (status == 'Aman') return Colors.green;
-    if (status == 'Waspada') return Colors.orange;
-    if (status == 'Bahaya') return Colors.red;
-    return Colors.grey;
   }
 }

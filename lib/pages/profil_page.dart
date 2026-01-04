@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'edit_profile_page.dart';
+import 'package:dailynutryapp/services/google_auth.dart';
+
+
 
 class ProfilPage extends StatefulWidget {
-  const ProfilPage({Key? key}) : super(key: key);
+  const ProfilPage({super.key});
 
   @override
   State<ProfilPage> createState() => _ProfilPageState();
@@ -10,17 +14,23 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   // 🔹 Fungsi logout Firebase
-  void _logout(BuildContext context) async {
+  void _logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      // Logout dari Firebase + Google
+      await GoogleAuthService().signOutGoogleAndFirebase();
+
+      if (!mounted) return;
+
+      // Kembali ke halaman login, hapus semua halaman sebelumnya
       Navigator.of(context).pushReplacementNamed('/login');
+      // Atau pakai GetX: Get.offAllNamed('/login');
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Gagal logout: $e')),
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -112,13 +122,22 @@ class _ProfilPageState extends State<ProfilPage> {
             leading: const Icon(Icons.edit, color: Colors.green),
             title: const Text("Edit Profil"),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Fitur belum tersedia")),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const EditProfilePage()),
               );
             },
           ),
+          ListTile(
+            leading: Icon(Icons.feedback, color: Colors.green),
+            title: Text("Kirim Feedback"),
+            trailing: Icon(Icons.arrow_forward_ios, size: 16),
+            onTap: () {
+              Navigator.pushNamed(context, '/feedback');
+            },
+          ),
 
-          const Divider(),
+          // const Divider(),
 
           // ===============================
           // LOGOUT
@@ -129,7 +148,7 @@ class _ProfilPageState extends State<ProfilPage> {
               "Logout",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            onTap: () => _logout(context),
+            onTap: _logout,
           ),
         ],
       ),

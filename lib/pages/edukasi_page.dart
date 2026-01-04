@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'beranda_page.dart';
 
 class EdukasiPage extends StatelessWidget {
   const EdukasiPage({Key? key}) : super(key: key);
@@ -33,7 +34,10 @@ class EdukasiPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // tombol kembali
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BerandaPage()),
+            ); // tombol kembali
           },
         ),
       ),

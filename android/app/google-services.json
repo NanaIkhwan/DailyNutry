@@ -12,7 +12,20 @@
           "package_name": "com.example.dailynutryapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "724631896637-90qal8mgaie2kpk3c98dto2bi1sc3o0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dailynutryapp",
+            "certificate_hash": "cf695c5de1fa8fc41f1f88b68f9073780bc584b8"
+          }
+        },
+        {
+          "client_id": "724631896637-292u5c7jpcl6c51uo80c0irjtidbpgf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAEzpz-HJUc3QIA_CuDfgBEjnNNhgQ36YA"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724631896637-292u5c7jpcl6c51uo80c0irjtidbpgf9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "724631896637-0vvfi4p722mm0pd2c665kmpm08qapjb3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dailynutryapp"
+              }
+            }
+          ]
         }
       }
     }

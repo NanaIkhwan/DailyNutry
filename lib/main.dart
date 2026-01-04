@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:dailynutryapp/pages/feedback_page.dart';
+
 
 // Halaman utama dari project kamu
 import 'pages/beranda_page.dart';
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/beranda': (context) => const BerandaPage(),
         '/upload': (context) => const UploadPage(),
         '/chatbot': (context) => const ChatbotPage(),
+        '/feedback': (context) => const FeedbackPage(),
         '/login': (context) => const Login(), // penting untuk logout
       },
     );
